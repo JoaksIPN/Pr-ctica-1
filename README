@@ -1,0 +1,5 @@
+DEFINICION DEL PROBLEMA:
+
+1.El programa mostrara el resultado de la revision del parentesis.
+2.El programa mostrara el resultado de pasar la expresion infija a posfija.
+3.El programa mostrara el resultado de la evaluacion de la expresion, para ello se solicitara el valor flotante de cada una de las variables (A-Z) que contiene la expresion. 
