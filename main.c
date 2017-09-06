@@ -47,8 +47,8 @@ ValidarParentesis (char array[TAM])
 
   printf ("Expresion correcta.\n");
 
-	
-  Destroy(&palpila);
+
+  Destroy (&palpila);
 
 }
 
@@ -66,8 +66,8 @@ Posfijo (char array[TAM])
 
   pila posfijo;
   Initialize (&posfijo);
-  
-  resultado=(char*)malloc(1*sizeof(char));
+
+  resultado = (char *) malloc (1 * sizeof (char));
 
 
 
@@ -101,7 +101,8 @@ Posfijo (char array[TAM])
 
       if (E.Char == ')')
 	{
-	  E1 = Top (&posfijo);
+	  if (Empty (&posfijo) == FALSE)
+	    E1 = Top (&posfijo);
 	  while (E1.Char != '(')
 	    {
 	      E2 = Pop (&posfijo);
@@ -122,7 +123,8 @@ Posfijo (char array[TAM])
 
       if (E.Char == '+' || E.Char == '-')
 	{
-	  E1 = Top (&posfijo);
+	  if (Empty (&posfijo) == FALSE)
+	    E1 = Top (&posfijo);
 
 	  if ('(' == E1.Char || Empty (&posfijo) == TRUE)
 	    Push (&posfijo, E);
@@ -152,7 +154,8 @@ Posfijo (char array[TAM])
       if (E.Char == '*' || E.Char == '/')
 	{
 
-	  E1 = Top (&posfijo);
+	  if (Empty (&posfijo) == FALSE)
+	    E1 = Top (&posfijo);
 
 	  if (('*' != E1.Char && '/' != E1.Char && '^' != E1.Char)
 	      || Empty (&posfijo) == TRUE)
@@ -184,7 +187,8 @@ Posfijo (char array[TAM])
       if (E.Char == '^')
 	{
 
-	  E1 = Top (&posfijo);
+	  if (Empty (&posfijo) == FALSE)
+	    E1 = Top (&posfijo);
 	  if ('^' != E1.Char || Empty (&posfijo) == TRUE)
 	    Push (&posfijo, E);
 
@@ -226,9 +230,9 @@ Posfijo (char array[TAM])
 
     }
 
-  Destroy(&posfijo);
+  Destroy (&posfijo);
   resultado[j] = '\0';
-	
+
 
   return resultado;
 
@@ -243,9 +247,9 @@ EvalPosfijo (char array[TAM])
   int k = 0;
   int tamCadena;
   int val_posicion = 0;
-  float resultado=0.0f;
-  float res_final=0.0f;
-  float valor=0.0f;
+  float resultado = 0.0f;
+  float res_final = 0.0f;
+  float valor = 0.0f;
   float valor_variable[27];
   elemento E, E1, E2, E3, E4, Res;
 
@@ -276,9 +280,9 @@ EvalPosfijo (char array[TAM])
 	      printf ("Insertar el valor de la variable %c:", val_posicion);
 	      scanf ("%f", &valor);
 	      valor_variable[val_posicion - 65] = valor;
- 	      valor=0.0f;
+	      valor = 0.0f;
 	    }
-	  
+
 
 
 	  E4.Float = valor_variable[val_posicion - 65];
@@ -290,7 +294,7 @@ EvalPosfijo (char array[TAM])
 	{
 	  E1 = Pop (&valores);
 	  E2 = Pop (&valores);
-	  resultado = pow (E2.Float,E1.Float);
+	  resultado = pow (E2.Float, E1.Float);
 	  E3.Float = resultado;
 	  Push (&valores, E3);
 	}
@@ -340,7 +344,7 @@ EvalPosfijo (char array[TAM])
 
   res_final = Res.Float;
 
-  Destroy(&valores);
+  Destroy (&valores);
   return res_final;
 
 
@@ -352,7 +356,7 @@ main (void)
 
 
   char cadena[TAM];
-  char *cadena_posfijo='\0';
+  char *cadena_posfijo = '\0';
   float resultado;
 
   printf ("<<<<<<<<<<<<<Bienvenido>>>>>>>>>>>>>:\n");
