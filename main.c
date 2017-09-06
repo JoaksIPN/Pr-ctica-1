@@ -1,3 +1,21 @@
+/*
+AUTOR: Dominguez Moran Joaqu韓, Garc韆 Iba馿z Diego, Rosas S醤chez Paloma. Agosto 2017.
+VERSI覰: 1.0.
+
+DESCRIPCI覰: Programa que valida y evalua una expresi髇 infija.
+
+OBSERVACIONES: El programa utiliza 6 funciones para realizar las operaciones que poco a poco modifican la matriz original.
+
+COMPILACI覰: 
+			Windows: gcc main.c TADPilaEst.c
+			Linux: gcc main.c TADPilaEst.c -lm
+
+EJECUCI覰: 
+			Windows: a.exe
+			Linux: ./a
+*/
+
+//MACROS DEL PREPROCESADOR
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -5,73 +23,93 @@
 #include "TADPilaDin.h"
 #include <math.h>
 
-#define TAM 100
+//DEFINICIONES
+#define TAM 100			//Se define el numero de datos que se pueden ingresar
+
+
+
+//DEFINICI覰 DE FUNCIONES
+
+/*
+**void ValidarParentesis (char array[TAM])**
+DESCRIPCI覰: Funci髇 que evalua una expresi髇 para asegurar que los parentesis estan escritos de manera correcta.
+ENTRADA: Un arreglo de tipo caracter de TAM 100
+SALIDA: Impresi髇 en pantalla del resultado de la evaluaci髇
+OBSERVACIONES: Se emplea la libreria TADPilaEst.h
+*/
 
 void
 ValidarParentesis (char array[TAM])
 {
-  int i = 0;
-  int tamano;
-  float valor;
-  tamano = strlen (array);
-  elemento e;
-  pila palpila;
-  Initialize (&palpila);
-  for (i = 0; i < tamano; i++)
+  int i = 0;			//Se declara una variable de tipo entero y se inicializa en 0 
+  int tamano;			//Se declara una variable de tipo entero
+  float valor;			//Se declara variable de tipo flotante
+  tamano = strlen (array);	//Medir el tama駉 del arreglo
+  elemento e;			//Se declara un elemento e
+  pila palpila;			//Se declara una pila "palpila"
+  Initialize (&palpila);	//Inicializaci髇 de la pila "palpila"
+  for (i = 0; i < tamano; i++)	//Ciclo for que recorre cada caracter del arreglo
     {
       e.Char = array[i];
-      if (array[i] == '(')
+      if (array[i] == '(')	//Si el caracter es "(" introducirlo a la pila
 	Push (&palpila, e);
-      if (array[i] == ')')
+      if (array[i] == ')')	//Si el caracter es ")" realizar un Pop a la pila
 	{
-	  if (Empty (&palpila))
+	  if (Empty (&palpila))	//Si se intenta extraer un elemento y la pila es vacia Error
 	    {
-
 	      printf
-		("Existen m谩s parentesis de los que cierran de los que abren. \n");
+		("Existen m醩 parentesis de los que cierran de los que abren. \n");
 	      exit (1);
-
 	    }
+
 	  Pop (&palpila);
 
 	}
 
     }
 
-  if (!Empty (&palpila))
+  if (!Empty (&palpila))	//Si al terminar de revisar la expresi贸n a煤n hay elementos en la pila Error
     {
       printf
-	("Existen m谩s parentesis de los que abren de los que cierran.\n");
+	("Existen m醩 parentesis de los que abren de los que cierran.\n");
       exit (1);
     }
 
-  printf ("Expresion correcta.\n");
+  printf ("Expresion correcta.\n");	//Si la ejecuci髇 termina de manera correcta
 
 
-  Destroy (&palpila);
-
+  Destroy (&palpila);		//Destruir los elementos de la pila
+  
 }
+
+/*
+**char *Posfijo (char array[TAM])**
+DESCRIPCI覰: Funci髇 que pasa una expresi髇 aritm閠ica en posfijo a partir de la expresi髇 infija.
+ENTRADA: Un arreglo de tipo caracter de TAM 100
+SALIDA: Un arreglo con la expresi髇 infija transformada en posfija
+OBSERVACIONES: ****
+*/
 
 char *
 Posfijo (char array[TAM])
 {
-  int i;
-  int j = 0;
-  int k = 0;
-  int tamCadena;
-  char *resultado;
-  elemento E, E1, E2;
+  int i;			//Se declara una variable de tipo entero 
+  int j = 0;			//Se declara e inicializa una variable de tipo entero
+  int k = 0;			//Se declara e inicializa una variable de tipo entero
+  int tamCadena;		//Se declara una variable de tipo entero
+  char *resultado;		//Se declara variable de tipo apuntador
+  elemento E, E1, E2;		//Se declara elemento E,E1,E2
 
-  tamCadena = strlen (array);
+  tamCadena = strlen (array);	////Medir el tama駉 del arreglo
 
-  pila posfijo;
-  Initialize (&posfijo);
+  pila posfijo;			//Se declara una pila "posfijo"
+  Initialize (&posfijo);	//Inicializar pila "posfijo"
 
   resultado = (char *) malloc (1 * sizeof (char));
 
 
 
-  for (i = 0; i < tamCadena; i++)
+  for (i = 0; i < tamCadena; i++)	//Ciclo for que recorre cada caracter del arreglo
     {
 
       E.Char = array[i];
@@ -239,6 +277,9 @@ Posfijo (char array[TAM])
 
 }
 
+///////////////////////////////////////////////////////////////////////////////////////////
+
+
 float
 EvalPosfijo (char array[TAM])
 {
@@ -350,30 +391,26 @@ EvalPosfijo (char array[TAM])
 
 }
 
+//PRINCIPAL
+
 int
 main (void)
 {
+  char cadena[TAM];		//Se declara un arreglo de tipo caracter y de tama駉 definido arriba (TAM 100)
+  char *cadena_posfijo = '\0';	//Se declara Variable de tipo apuntador a caracter que recibe el arreglo que retorna la funci髇 posfijo
+  float resultado;		//Se declara una variable de tipo entero 
+
+  printf ("<<<<<<<<<<<<<Bienvenido>>>>>>>>>>>>>:\n");	//Impresi髇 en pantalla
+  printf ("Inserte una expresi髇 aritmetica:\n");	//Impresi髇 en pantalla
 
 
-  char cadena[TAM];
-  char *cadena_posfijo = '\0';
-  float resultado;
+  scanf ("%s", cadena);		//Captura la expresi髇 y la guarda en el arreglo de tipo caracter declarado anteriormente
 
-  printf ("<<<<<<<<<<<<<Bienvenido>>>>>>>>>>>>>:\n");
-  printf ("Inserte una expresi贸n aritmetica:\n");
+  ValidarParentesis (cadena);	//Se llama a la primer funci髇 teniendo como entrada la cadena ingresada por el usuario
 
+  cadena_posfijo = Posfijo (cadena);	//Variable de tipo caracter que llama a nuestra segunda funci髇 (posfijo) 
+  printf ("Expresi髇 en posfijo:\t %s \n", cadena_posfijo);	//Impresi髇 en pantalla del resultado del arreglo resultante de la funci髇 que se llamo en la linea anterior
 
-  scanf ("%s", cadena);
-
-  ValidarParentesis (cadena);
-
-  cadena_posfijo = Posfijo (cadena);
-  printf ("Expresi贸n en posfijo:\t %s \n", cadena_posfijo);
-
-  resultado = EvalPosfijo (cadena_posfijo);
-  printf ("Evaluaci贸n: \t %f \n", resultado);
-
-
-
-
+  resultado = EvalPosfijo (cadena_posfijo);	//Variable de tipo flotante que llama a nuestra tercera funci髇, tomando como entrada para esta, el arreglo retornado por la funci髇 posfijo y sustituyendo los valores de las variables dadas por el usuario
+  printf ("Evaluaci髇: \t %f \n", resultado);	//Impresi髇 en pantalla del resultado de la operaci髇 aritmetica.
 }
